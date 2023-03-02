@@ -13,11 +13,11 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t ArpitaSin/ArpitaJenkinsProject .'
+                    sh 'docker build -t arpitasin/my-first-repo-arpita-jenkins:developer .'
                 }
             }
         }
-        stage('Push image to Hub'){
+        stage('Push image to Docker Hub'){
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
