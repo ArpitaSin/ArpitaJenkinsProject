@@ -6,14 +6,14 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ArpitaSin/devops-automation']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ArpitaSin/ArpitaJenkinsProject']]])
                 sh 'mvn clean install'
             }
         }
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t ArpitaSin/devops-integration .'
+                    sh 'docker build -t ArpitaSin/ArpitaJenkinsProject .'
                 }
             }
         }
@@ -24,14 +24,7 @@ pipeline {
                    sh 'docker login -u ArpitaSin -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push ArpitaSin/devops-integration'
-                }
-            }
-        }
-        stage('Deploy to k8s'){
-            steps{
-                script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+                   sh 'docker push ArpitaSin/ArpitaJenkinsProject'
                 }
             }
         }
